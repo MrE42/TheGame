@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using System;
 
 public class PlayerController : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class PlayerController : MonoBehaviour
 
     public Rigidbody rb;
     private int count;
-    private int bits;
+    public int bits;
     private float movementX;
     private float movementY;
     public bool input = true;
@@ -44,6 +45,7 @@ public class PlayerController : MonoBehaviour
             movementY = movementVector.y;
         }
     }
+
 
     void SetCountText()
     {
@@ -75,6 +77,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("Trigger Entered");
         if (other.gameObject.CompareTag("PickUp"))
         {
             other.gameObject.SetActive(false);
@@ -106,5 +109,20 @@ public class PlayerController : MonoBehaviour
                 other.gameObject.SetActive(false);
             }
         }
+    }
+
+    public void StarBitCollision(GameObject bit)
+    {
+        bit.SetActive(false);
+        bits = bits + 1;
+
+        SetStarText();
+    }
+
+    public void StarCollision(GameObject Star)
+    {
+        gameObject.GetComponent<AudioSource>().clip = Star.GetComponent<AudioSource>().clip;
+        gameObject.GetComponent<AudioSource>().Play();
+        Star.SetActive(false);
     }
 }            

@@ -29,7 +29,7 @@ public class SpawnIn : MonoBehaviour
         if (sceneA == true && first_try == false)
         {
             time = time + Time.fixedDeltaTime;
-            if (time >= 2.27f)
+            if (time >= 2f)
             {
                 rb.velocity = new Vector3(0, 0, 0);
                 transform.Rotate(new Vector3(0, 200, 0) * Time.fixedDeltaTime);

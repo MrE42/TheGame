@@ -9,9 +9,12 @@ public class PointerHandler : MonoBehaviour
 {
     public StarLauncher s;
     public SteamVR_LaserPointer laserPointer;
+    private PlayerController pc;
 
     void Awake()
     {
+        pc = gameObject.GetComponent<PlayerController>();
+
         laserPointer.PointerIn += PointerInside;
         laserPointer.PointerOut += PointerOutside;
         laserPointer.PointerClick += PointerClick;
@@ -29,6 +32,11 @@ public class PointerHandler : MonoBehaviour
         {
             Debug.Log("Launch Star was clicked");
             s.initiate = true;
+        }
+        else if (e.target.CompareTag("Star"))
+        {
+            Debug.Log("Star was clicked");
+            pc.StarCollision(e.target.gameObject);
         }
     }
 
@@ -52,6 +60,10 @@ public class PointerHandler : MonoBehaviour
             TargetingSystem t = e.target.gameObject.GetComponent<TargetingSystem>();
             t.initialized = 1;
         }
+        else if (e.target.CompareTag("Star"))
+        {
+            Debug.Log("Star was entered");
+        }
     }
 
     public void PointerOutside(object sender, PointerEventArgs e)
@@ -67,6 +79,10 @@ public class PointerHandler : MonoBehaviour
         {
             Debug.Log("Launch Star was exited");
             s.insideLaunchStar = false; 
+        }
+        else if (e.target.CompareTag("Star"))
+        {
+            Debug.Log("Star was exited");
         }
     }
 }
