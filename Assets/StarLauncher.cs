@@ -14,7 +14,7 @@ public class StarLauncher : MonoBehaviour
 
     public AnimationCurve pathCurve;
 
-    [Range(0,50)]
+    [Range(0, 50)]
     public float speed = 10f;
     float speedModifier = 1;
 
@@ -45,7 +45,7 @@ public class StarLauncher : MonoBehaviour
     public ParticleSystem smokeParticle;
 
     private List<InputDevice> devices;
-    
+
 
     void Start()
     {
@@ -56,8 +56,8 @@ public class StarLauncher : MonoBehaviour
         {
             Debug.Log(item.name + item.characteristics);
         }
-        
-        
+
+
         animator = GetComponent<Animator>();
         //movement = GetComponent<MovementInput>();
         trail = dollyCart.GetComponentInChildren<TrailRenderer>();
@@ -73,7 +73,7 @@ public class StarLauncher : MonoBehaviour
                 initiate = false;
             }
         }
-            
+
 
 
         if (flying)
@@ -86,7 +86,7 @@ public class StarLauncher : MonoBehaviour
             }
         }
 
-        if(dollyCart.m_Position > .7f && !almostFinished && flying)
+        if (dollyCart.m_Position > .7f && !almostFinished && flying)
         {
             almostFinished = true;
             //thirdPersonCamera.m_XAxis.Value = cameraRotation;
@@ -112,7 +112,7 @@ public class StarLauncher : MonoBehaviour
 
         //Checks to see if there is a Camera Trigger at the DollyTrack object - if there is activate its camera
         //if (launchObject.GetComponent<CameraTrigger>() != null)
-            //launchObject.GetComponent<CameraTrigger>().SetCamera();
+        //launchObject.GetComponent<CameraTrigger>().SetCamera();
 
         //Checks to see if there is a Camera Trigger at the DollyTrack object - if there is activate its camera
         if (launchObject.GetComponent<SpeedModifier>() != null)
@@ -161,9 +161,9 @@ public class StarLauncher : MonoBehaviour
         s.AppendCallback(() => followParticles.Play());
         s.Append(DOVirtual.Float(dollyCart.m_Position, 1, finalSpeed, PathSpeed).SetEase(pathCurve));                // Lerp the value of the Dolly Cart position from 0 to 1
         s.Join(starAnimation.PunchStar(.5f));
-        s.Join(transform.DOLocalMove(new Vector3(0,0,-.5f), .5f));                                                   // Return player's Y position
+        s.Join(transform.DOLocalMove(new Vector3(0, 0, -.5f), .5f));                                                   // Return player's Y position
         s.Join(transform.DOLocalRotate(new Vector3(0, 360, 0),                                                       // Slow rotation for when player is flying
-            (finalSpeed/1.3f), RotateMode.LocalAxisAdd)).SetEase(Ease.InOutSine); 
+           (finalSpeed / 1.3f), RotateMode.LocalAxisAdd)).SetEase(Ease.InOutSine);
         s.AppendCallback(() => Land());                                                                              // Call Land Function
 
         return s;
